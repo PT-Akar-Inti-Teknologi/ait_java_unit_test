@@ -6,9 +6,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 
+import org.ait.module.java.unittest.JsonTester;
 import org.ait.project.unittestexample.modules.food.transform.FoodMapper;
-import org.ait.project.unittestexample.shared.JsonTestInterface;
-import org.ait.project.unittestexample.shared.JsonTester;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
