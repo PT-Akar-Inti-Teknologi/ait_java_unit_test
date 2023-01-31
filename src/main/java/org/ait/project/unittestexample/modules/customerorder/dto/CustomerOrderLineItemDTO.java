@@ -1,14 +1,12 @@
 package org.ait.project.unittestexample.modules.customerorder.dto;
 
-import javax.validation.constraints.*;
+import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.io.Serializable;
 
 /**
  * A DTO for the {@link org.ait.project.aitjhsmono.domain.CustomerOrderLineItem} entity.
@@ -26,7 +24,7 @@ public class CustomerOrderLineItemDTO implements Serializable {
 	private Long id;
 
     @NotNull
-    private Integer quantity;
+    private Long quantity;
 
     private Long foodId;
 
