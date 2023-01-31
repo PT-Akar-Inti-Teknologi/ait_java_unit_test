@@ -12,8 +12,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 
 /**
  * A CustomerOrder.
@@ -42,23 +41,9 @@ public class CustomerOrder implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "order_type")
     private CustomerOrderType orderType;
-
-    @OneToMany(mappedBy = "customerOrder", 
-    		   fetch = FetchType.LAZY)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<CustomerOrderLineItem> lineItems = new HashSet<>();
-
     
-    public CustomerOrder addLineItem(CustomerOrderLineItem customerOrderLineItem) {
-        this.lineItems.add(customerOrderLineItem);
-        customerOrderLineItem.setCustomerOrder(this);
-        return this;
-    }
-
-    public CustomerOrder removeLineItem(CustomerOrderLineItem customerOrderLineItem) {
-        this.lineItems.remove(customerOrderLineItem);
-        customerOrderLineItem.setCustomerOrder(null);
-        return this;
-    }
+    @Column(name = "order_time")
+    private ZonedDateTime orderTime;
+    
 
 }

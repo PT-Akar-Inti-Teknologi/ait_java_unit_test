@@ -2,7 +2,6 @@ package org.ait.project.unittestexample.modules.customerorder.dto;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.List;
 
 import org.ait.project.unittestexample.shared.constant.enums.CustomerOrderType;
 
@@ -35,8 +34,5 @@ public class CustomerOrderDTO implements Serializable {
     
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssXXX")
     private ZonedDateTime orderTime;
-    
-    private List<CustomerOrderLineItemDTO> lineItems;
-
  
 }

@@ -1,12 +1,11 @@
 package org.ait.project.unittestexample.modules.customerorder.dto;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 
 import org.ait.module.java.unittest.JsonTester;
-import org.ait.module.java.unittest.JsonTester.JsonTestType;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -55,7 +54,7 @@ public class CustomerOrderLineItemDTOTest
 		assertEquals(expectedLineItem.getId(), actualLineItem.getId());
 		assertEquals(expectedLineItem.getFoodId(), actualLineItem.getFoodId());
 		assertEquals(expectedLineItem.getQuantity(), actualLineItem.getQuantity());
-		
+		assertEquals(expectedLineItem.getCustomerOrderId(), actualLineItem.getCustomerOrderId());
 		
 	}
 	

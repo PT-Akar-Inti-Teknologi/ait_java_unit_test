@@ -58,16 +58,6 @@ public class CustomerOrderDTOTest
 		assertEquals(expected.getGuestName(), actual.getGuestName());
 		assertEquals(expected.getQueueNumber(), actual.getQueueNumber());
 		
-		for (int i = 0; i < actual.getLineItems().size(); i++) {
-			CustomerOrderLineItemDTO expectedLineItem = expected.getLineItems().get(i);
-			CustomerOrderLineItemDTO actualLineItem = actual.getLineItems().get(i);
-			
-			assertEquals(expectedLineItem.getId(), actualLineItem.getId());
-			assertEquals(expectedLineItem.getFoodId(), actualLineItem.getFoodId());
-			assertEquals(expectedLineItem.getQuantity(), actualLineItem.getQuantity());
-			
-		}
-		
 		
 	}
 }
