@@ -1,10 +1,12 @@
 package org.ait.project.unittestexample.modules.customerorder.transform;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.ait.module.java.unittest.mappertester.EntityMapperTester;
 import org.ait.project.unittestexample.modules.customerorder.dto.CustomerOrderDTO;
 import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrder;
+import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrderLineItem;
 import org.junit.jupiter.api.Test;
 
 import lombok.Getter;
@@ -32,6 +34,11 @@ public class CustomerOrderMapperTest
 	@Test
 	@Override
 	public void testMapDtoToEntity() {
+		//null test
+        CustomerOrder nullResult = mapper.toEntity(null);
+		assertNull(nullResult);
+				
+		//non-null test
 		CustomerOrder resultEntity = mapper.toEntity(getDto());
 		
 		assertEquals(getDto().getGuestName(), resultEntity.getGuestName());
@@ -45,6 +52,11 @@ public class CustomerOrderMapperTest
 	@Test
 	@Override
 	public void testMapEntityToDto() {
+		//null test
+        CustomerOrderDTO nullResult = mapper.toDto(null);
+		assertNull(nullResult);
+				
+		//non-null test
 		CustomerOrderDTO resultDto = mapper.toDto(getEntity());
 		
 		assertEquals(getEntity().getGuestName(), resultDto.getGuestName());

@@ -24,6 +24,11 @@ public class CustomerOrderLineItemMapperTest
 	
 	@Test
 	public void testMapDtoToEntity() {
+		//null test
+		CustomerOrderLineItem nullResult = mapper.toEntity(null);
+		assertNull(nullResult);
+		
+		//non-null test
 		CustomerOrderLineItem resultEntity = mapper.toEntity(dto);
 		
 		assertEquals(dto.getCustomerOrderId(), resultEntity.getCustomerOrder().getId());
@@ -34,7 +39,12 @@ public class CustomerOrderLineItemMapperTest
 
 	@Test
 	public void testMapEntityToDto() {
-        CustomerOrderLineItemDTO resultDto = mapper.toDto(entity);
+		//null test
+		CustomerOrderLineItemDTO nullResult = mapper.toDto(null);
+		assertNull(nullResult);
+		
+	    //non-null test
+		CustomerOrderLineItemDTO resultDto = mapper.toDto(entity);
 		
 		assertEquals(entity.getCustomerOrder().getId(), resultDto.getCustomerOrderId());
 		assertEquals(entity.getFood().getId(), resultDto.getFoodId());
