@@ -1,7 +1,5 @@
 package org.ait.project.unittestexample.shared.utils.transform;
 
-import java.util.List;
-
 /**
  * Contract for a generic dto to entity mapper.
  *
@@ -14,8 +12,5 @@ public interface EntityMapper <D, E> {
     E toEntity(D dto);
 
     D toDto(E entity);
-
-    List <E> toEntity(List<D> dtoList);
-
-    List <D> toDto(List<E> entityList);
+    
 }
