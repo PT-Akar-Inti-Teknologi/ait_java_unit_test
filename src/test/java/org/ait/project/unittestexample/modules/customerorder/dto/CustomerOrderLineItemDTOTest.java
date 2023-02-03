@@ -1,11 +1,13 @@
 package org.ait.project.unittestexample.modules.customerorder.dto;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 
 import org.ait.module.java.unittest.JsonTester;
+import org.ait.module.java.unittest.JsonTester.JsonTestType;
+import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -37,8 +39,9 @@ public class CustomerOrderLineItemDTOTest
 		// serialize the object to test, into JSON
 		String actual = om.writeValueAsString(getObjectToTest());
 		
-		// compare the expected JSON provided, against the JSON written by the ObjectMapper 
-		JSONAssert.assertEquals(new String(getSourceJson().readAllBytes(), Charset.defaultCharset()), actual, JSONCompareMode.STRICT);
+		// compare the expected JSON provided, against the JSON written by the ObjectMapper
+		byte[] source= IOUtils.toByteArray(getSourceJson());
+		JSONAssert.assertEquals(new String(source, Charset.defaultCharset()), actual, JSONCompareMode.STRICT);
 	}
 	
 	@Order(2)
