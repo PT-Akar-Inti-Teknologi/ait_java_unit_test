@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.ait.module.java.unittest.servicetester.ServiceDelegateTester;
 import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrderLineItem;
 import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrderLineItemRepository;
+import org.apache.commons.math3.random.RandomDataGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -116,7 +117,7 @@ public class CustomerOrderLineItemServiceDelegateTest
 	public void generateEntity() {
 		entity = getEasyRandom().nextObject(CustomerOrderLineItem.class);
 		entity.setId((Long) getTestParameterValues().get(TestParameters.LINE_ITEM_ID));
-		entity.setQuantity(getEasyRandom().nextLong(30, 50));
+		entity.setQuantity(new RandomDataGenerator().nextLong(30, 50));
 		if (entity.getQuantity().equals((Long) getTestParameterValues().get(TestParameters.NEW_QUANTITY))) {
 			// should not be the same as new quantity to use as parameter
 			entity.setQuantity(getEasyRandom().nextLong());
@@ -128,7 +129,7 @@ public class CustomerOrderLineItemServiceDelegateTest
 		testParameterValues = new HashMap<>();
 		for (TestParameters param : TestParameters.values()) {
 			if (param.valueType.equals(Long.class)) {
-				testParameterValues.put(param, getEasyRandom().nextLong(1, 25));
+				testParameterValues.put(param, new RandomDataGenerator().nextLong(1, 25));
 			} else {
 				testParameterValues.put(param, getEasyRandom().nextObject(param.valueType));
 			}
