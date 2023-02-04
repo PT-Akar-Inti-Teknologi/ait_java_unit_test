@@ -10,7 +10,6 @@ import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerO
 import org.ait.project.unittestexample.modules.customerorder.transform.CustomerOrderMapper;
 import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Service

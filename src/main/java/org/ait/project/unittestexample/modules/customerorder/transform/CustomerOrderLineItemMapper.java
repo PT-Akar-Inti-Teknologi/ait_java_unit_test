@@ -21,7 +21,7 @@ public interface CustomerOrderLineItemMapper
     @Mapping(source = "customerOrder.id", target = "customerOrderId")
     CustomerOrderLineItemDTO toDto(CustomerOrderLineItem customerOrderLineItem);
 
-    @Mapping(source = "foodId", target = "food")
+    @Mapping(source = "foodId", target = "food.id")
     @Mapping(source = "customerOrderId", target = "customerOrder.id")
     CustomerOrderLineItem toEntity(CustomerOrderLineItemDTO customerOrderLineItemDTO);
 

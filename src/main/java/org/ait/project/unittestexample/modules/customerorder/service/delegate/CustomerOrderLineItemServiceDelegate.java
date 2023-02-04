@@ -1,15 +1,16 @@
 package org.ait.project.unittestexample.modules.customerorder.service.delegate;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.ait.project.unittestexample.modules.customerorder.dto.CustomerOrderLineItemDTO;
 import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrderLineItem;
 import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrderLineItemRepository;
 import org.ait.project.unittestexample.modules.customerorder.transform.CustomerOrderLineItemMapper;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.comparator.NullSafeComparator;
 
 import lombok.AllArgsConstructor;
@@ -19,6 +20,16 @@ import lombok.AllArgsConstructor;
 public class CustomerOrderLineItemServiceDelegate {
 
 	private final CustomerOrderLineItemRepository customerOrderLineItemRepository;
+	
+	private final CustomerOrderLineItemMapper mapper = CustomerOrderLineItemMapper.INSTANCE;
+	
+	public List<CustomerOrderLineItem> bulkSave(Long customerOrderId, List<CustomerOrderLineItemDTO> givenList) {
+		
+		givenList.forEach(lineItem -> lineItem.setCustomerOrderId(customerOrderId));
+		List<CustomerOrderLineItem> listToSave = givenList.stream().map(mapper::toEntity).collect(Collectors.toList());
+		return customerOrderLineItemRepository.saveAll(listToSave);
+		
+	}
 
 	public CustomerOrderLineItem incrementQuantity(Long lineItemId) {
 

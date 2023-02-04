@@ -1,9 +1,11 @@
 package org.ait.project.unittestexample.modules.customerorder.transform;
 
 import org.ait.project.unittestexample.modules.customerorder.dto.CustomerOrderDTO;
+import org.ait.project.unittestexample.modules.customerorder.dto.CustomerOrderFromMobileApp;
 import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrder;
 import org.ait.project.unittestexample.shared.utils.transform.EntityMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 
@@ -18,6 +20,8 @@ public interface CustomerOrderMapper extends EntityMapper<CustomerOrderDTO, Cust
     CustomerOrder toEntity(CustomerOrderDTO customerOrderDTO);
     
     CustomerOrderDTO toDto(CustomerOrder entity);
+    
+    CustomerOrderFromMobileApp toResponse(CustomerOrder entity);
 
     default CustomerOrder fromId(Long id) {
         if (id == null) {
