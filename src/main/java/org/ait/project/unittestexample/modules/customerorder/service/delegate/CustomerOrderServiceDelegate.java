@@ -26,18 +26,13 @@ public class CustomerOrderServiceDelegate {
 		return customerOrderRepository.save(customerOrder);
 	}
 	
-	public CustomerOrder updateExisting(CustomerOrderDTO updateDTO) {
-		Optional<CustomerOrder> customerOrderOptional = customerOrderRepository.findById(updateDTO.getId());
+	public CustomerOrder updateExisting(CustomerOrder entityToUpdate, 
+			                            CustomerOrderDTO updateDTO) {
 		
-		if (customerOrderOptional.isPresent()) {
-			CustomerOrder customerOrder = customerOrderOptional.get();
-			
-			return update(customerOrder, updateDTO);
-		} else {
-			throw new EntityNotFoundException();
-		}
+		return update(entityToUpdate, updateDTO);
 	}
 	
+	// refactoring target: simplify update
 	private CustomerOrder update(CustomerOrder customerOrder, CustomerOrderDTO updateDTO) {
 		customerOrder.setOrderType(updateDTO.getOrderType());
 		customerOrder.setGuestName(updateDTO.getGuestName());

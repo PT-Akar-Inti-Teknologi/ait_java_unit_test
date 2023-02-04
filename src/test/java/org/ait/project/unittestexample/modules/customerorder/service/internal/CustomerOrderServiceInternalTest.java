@@ -1,13 +1,18 @@
 package org.ait.project.unittestexample.modules.customerorder.service.internal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.ait.module.java.unittest.servicetester.ServiceInternalTester;
 import org.ait.project.unittestexample.modules.customerorder.dto.CustomerOrderDTO;
@@ -15,8 +20,6 @@ import org.ait.project.unittestexample.modules.customerorder.dto.CustomerOrderFr
 import org.ait.project.unittestexample.modules.customerorder.dto.CustomerOrderLineItemDTO;
 import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrder;
 import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrderLineItem;
-import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrderLineItemRepository;
-import org.ait.project.unittestexample.modules.customerorder.model.jpa.CustomerOrderRepository;
 import org.ait.project.unittestexample.modules.customerorder.service.delegate.CustomerOrderLineItemServiceDelegate;
 import org.ait.project.unittestexample.modules.customerorder.service.delegate.CustomerOrderServiceDelegate;
 import org.ait.project.unittestexample.modules.customerorder.transform.CustomerOrderLineItemMapper;
@@ -33,9 +36,11 @@ public class CustomerOrderServiceInternalTest extends ServiceInternalTester {
 	private CustomerOrderServiceInternal service;
 	
 	
-	private Map<TestParameter, Object> testParameterValues;
+	private Map<TestParameter, Object> testParameterValues = new HashMap<>();
 	
 	private CustomerOrderFromMobileApp creationRequest;
+	
+	private CustomerOrder beforeUpdate;
 	private CustomerOrderDTO updatingRequest;
 	
 	private CustomerOrderMapper orderMapper = CustomerOrderMapper.INSTANCE;
@@ -94,17 +99,30 @@ public class CustomerOrderServiceInternalTest extends ServiceInternalTester {
 
 	@Test
 	public void testUpdateCustomerOrder() {
-		fail("Not yet implemented");
-		service.updateCustomerOrder(updatingRequest);
 		
+		when(customerOrderDelegateService.fetchOneById(updatingRequest.getId())).thenReturn(beforeUpdate);
+		CustomerOrder afterUpdate = orderMapper.toEntity(updatingRequest);
+		when(customerOrderDelegateService.updateExisting(beforeUpdate, updatingRequest)).thenReturn(afterUpdate);
+		CustomerOrder actualUpdateResult = service.updateCustomerOrder(updatingRequest);
+		
+		assertEquals(beforeUpdate.getId(), actualUpdateResult.getId());
+		assertEquals(updatingRequest.getId(), actualUpdateResult.getId());
+		
+		assertNotEquals(beforeUpdate.getGuestName(), actualUpdateResult.getGuestName());
+		assertNotEquals(beforeUpdate.getOrderType(), actualUpdateResult.getOrderType());
+		assertNotEquals(beforeUpdate.getQueueNumber(), actualUpdateResult.getQueueNumber());
+		assertFalse(beforeUpdate.getOrderTime().isEqual(actualUpdateResult.getOrderTime()));
+		
+		assertEquals(updatingRequest.getGuestName(), actualUpdateResult.getGuestName());
+		assertEquals(updatingRequest.getOrderType(), actualUpdateResult.getOrderType());
+		assertEquals(updatingRequest.getQueueNumber(), actualUpdateResult.getQueueNumber());
+		assertTrue(updatingRequest.getOrderTime().isEqual(actualUpdateResult.getOrderTime()));
 	}
 
 	@Test
 	public void testDeleteCustomerOrder() {
-		fail("Not yet implemented");
 		Long customerOrderIdToDelete = (Long) testParameterValues.get(TestParameter.CUSTOMER_ORDER_ID_TO_DELETE);
 		service.deleteCustomerOrder(customerOrderIdToDelete);
-		
 	}
 
 	@Override
@@ -113,12 +131,19 @@ public class CustomerOrderServiceInternalTest extends ServiceInternalTester {
 		creationRequest.setId(null);
 		creationRequest.getLineItems().forEach(lineItem -> lineItem.setId(null));
 		
+		beforeUpdate = getEasyRandom().nextObject(CustomerOrder.class);
 		updatingRequest = getEasyRandom().nextObject(CustomerOrderDTO.class);
+		
+		Long idToUpdate = 
+				(Long)getTestParameterValues().get(TestParameter.CUSTOMER_ORDER_ID_TO_UPDATE);
+		beforeUpdate.setId(idToUpdate);
+		updatingRequest.setId(idToUpdate);
 	}
 
 	@Override
 	public void generateTestParameterValues() {
-		
+		getTestParameterValues().put(TestParameter.CUSTOMER_ORDER_ID_TO_UPDATE, 
+				                     getEasyRandom().nextLong());
 	}
 
 	@Override
@@ -133,6 +158,7 @@ public class CustomerOrderServiceInternalTest extends ServiceInternalTester {
 	@RequiredArgsConstructor
 	@Getter
 	enum TestParameter {
+		CUSTOMER_ORDER_ID_TO_UPDATE(Long.class),
 		CUSTOMER_ORDER_ID_TO_DELETE(Long.class);
 		
 		private final Class<?> valueType;

@@ -68,21 +68,23 @@ public class CustomerOrderServiceDelegateTest
 		when(getRepository().findById((Long)getTestParameterValues().get(TestParameters.CUSTOMER_ORDER_ID))).thenReturn(Optional.of(getEntity()));
 		when(getRepository().save(entityToSave)).thenReturn(entityToSave);
 		
-		CustomerOrder actual = service.updateExisting(update);
+		CustomerOrder actual = service.updateExisting(entityToSave, update);
 		
+		//Primary key
 		assertEquals(update.getId(), actual.getId());
+		assertEquals(getEntity().getId(), actual.getId());
+		
+		// before != after
+		assertNotEquals(getEntity().getGuestName(), actual.getGuestName());
+		assertNotEquals(getEntity().getOrderType(), actual.getOrderType());
+		assertNotEquals(getEntity().getQueueNumber(), actual.getQueueNumber());
+		assertFalse(getEntity().getOrderTime().isEqual(update.getOrderTime()));
+		
+		// after == updateRequest
 		assertEquals(update.getGuestName(), actual.getGuestName());
 		assertEquals(update.getOrderType(), actual.getOrderType());
 		assertEquals(update.getQueueNumber(), actual.getQueueNumber());
 		assertTrue(actual.getOrderTime().isEqual(update.getOrderTime()));
-		
-		Long nonExistentId = (Long)getTestParameterValues().get(TestParameters.NONEXISTENT_CUSTOMER_ORDER_ID);
-		update.setId(nonExistentId);
-		when(getRepository().findById(nonExistentId)).thenReturn(Optional.empty());
-		
-		assertThrows(EntityNotFoundException.class, ()->{
-			service.updateExisting(update);
-		});
 
 	}
 

@@ -52,10 +52,11 @@ public class CustomerOrderServiceInternal {
 		return toReturn;
 	}
 	
-	public CustomerOrderDTO updateCustomerOrder(CustomerOrderDTO source) {
-		CustomerOrder customerOrder = customerOrderServiceDelegate.updateExisting(source);
+	public CustomerOrder updateCustomerOrder(CustomerOrderDTO source) {
+		CustomerOrder toUpdate = customerOrderServiceDelegate.fetchOneById(source.getId());
+		CustomerOrder customerOrder = customerOrderServiceDelegate.updateExisting(toUpdate, source);
 		
-		return customerOrderMapper.toDto(customerOrder);
+		return customerOrder;
 	}
 	
 	public void deleteCustomerOrder(Long customerOrderId) {
