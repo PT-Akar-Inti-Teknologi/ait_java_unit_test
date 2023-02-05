@@ -56,19 +56,4 @@ public class Food implements Serializable, SoftDeletable {
     @Enumerated(EnumType.ORDINAL)
     private EntityStatus status;
 
-    @OneToMany(mappedBy = "food")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<CustomerOrderLineItem> customerOrderLineItems = new HashSet<>();
-
-    public Food addCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem) {
-        this.customerOrderLineItems.add(customerOrderLineItem);
-        customerOrderLineItem.setFood(this);
-        return this;
-    }
-
-    public Food removeCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem) {
-        this.customerOrderLineItems.remove(customerOrderLineItem);
-        customerOrderLineItem.setFood(null);
-        return this;
-    }
 }

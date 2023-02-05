@@ -15,8 +15,6 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
 public class FoodServiceDelegate {
 	
@@ -25,43 +23,38 @@ public class FoodServiceDelegate {
 	
 	private FoodMapper foodMapper = FoodMapper.INSTANCE;
 	
-	public FoodDTO createNewFood(FoodDTO foodDto) {
+	public Food createNewFood(FoodDTO foodDto) {
 		Food food = foodMapper.toEntity(foodDto);
 		
-		return foodMapper.toDto(foodRepository.save(food));
+		return foodRepository.save(food);
 		
 	}
 	
-	public void attachPicture(Long foodId, MultipartFile file) throws IOException {
+	public Food attachPicture(Food food, MultipartFile file) throws IOException {
 		final byte[] pictureToAttach = file.getBytes();
+		food.setPhoto(pictureToAttach);
+		food.setPhotoContentType(file.getContentType());
 		
-		foodRepository.findById(foodId).ifPresent(food -> {
-			food.setPhoto(pictureToAttach);
-			food.setPhotoContentType(file.getContentType());
-			foodRepository.save(food);
-		});
+		return foodRepository.save(food);
 	}
 	
 	public FoodPictureHolder fetchPicture(Long foodId) {
-		Optional<Food> foodOptional = foodRepository.findById(foodId);
-		
-		if (foodOptional.isPresent()) {
-			Food food = foodOptional.get();
-			FoodPictureHolder picture = new FoodPictureHolder();
-			picture.setPictureBytes(new ByteArrayResource(food.getPhoto(), food.getName()));
-			picture.setPictureContentType(food.getPhotoContentType());
-			return picture;
-		} else {
-			throw new EntityNotFoundException();
-		}
-		
+		Food food = fetchOne(foodId);
+		FoodPictureHolder holder = new FoodPictureHolder();
+		holder.setPictureBytes(new ByteArrayResource(food.getPhoto()));
+		holder.setPictureContentType(food.getPhotoContentType());
+		return holder;
 	}
 	
 	
-	public Optional<FoodDTO> fetchOne(Long id) {
+	public Food fetchOne(Long id) {
 		Optional<Food> fetchedFood = foodRepository.findById(id);
 		
-		return fetchedFood.map(foodMapper::toDto);
+		if (fetchedFood.isEmpty()) {
+			throw new EntityNotFoundException();
+		}
+		
+		return fetchedFood.get();
 	}
 	
 	public void deleteFood(Long id) {

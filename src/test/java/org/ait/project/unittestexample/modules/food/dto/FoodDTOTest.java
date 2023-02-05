@@ -1,13 +1,12 @@
 package org.ait.project.unittestexample.modules.food.dto;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 
 import org.ait.module.java.unittest.JsonTester;
-import org.ait.project.unittestexample.modules.food.transform.FoodMapper;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +19,6 @@ import com.fasterxml.jackson.databind.DatabindException;
 
 public class FoodDTOTest extends JsonTester<FoodDTO> {
 
-	private FoodMapper mapper = FoodMapper.INSTANCE;
-	
 	@BeforeEach
 	@Override
 	protected void setupTest() throws IOException {

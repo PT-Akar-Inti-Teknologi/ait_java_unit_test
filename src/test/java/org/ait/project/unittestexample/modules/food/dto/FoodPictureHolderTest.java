@@ -6,15 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FoodPictureHolderTest {
+public class FoodPictureHolderTest {
 
     private FoodMapper mapper = FoodMapper.INSTANCE;
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
 }

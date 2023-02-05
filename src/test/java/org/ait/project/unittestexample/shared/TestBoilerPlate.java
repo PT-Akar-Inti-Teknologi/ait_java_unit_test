@@ -49,7 +49,7 @@ public class TestBoilerPlate {
 		// ==============================
 
 		// method yang ditest saat ini
-		FoodDTO createdFood = foodServiceDelegate.createNewFood(newFood);
+		Food createdFood = foodServiceDelegate.createNewFood(newFood);
 
 		// uji hasil return dari function
 		

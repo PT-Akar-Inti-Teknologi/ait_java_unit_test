@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class FoodPictureHolder {
 
+	private Long foodId;
+	
 	private ByteArrayResource pictureBytes;
 	
 	private String pictureContentType;
