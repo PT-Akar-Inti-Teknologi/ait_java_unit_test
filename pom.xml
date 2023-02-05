@@ -178,7 +178,10 @@
 				<configuration>
 					<excludes>
 						<exclude>**jpa/*.class</exclude>
+						<exclude>**/*MapperImpl.class</exclude>
 						<exclude>**/dto/*.class</exclude>
+						<!-- exclude main spring app class-->
+						<exclude>org/ait/project/unittestexample/AitJavaUnitTestExampleApplication.class</exclude>
 					</excludes>
 				</configuration>
 				<executions>

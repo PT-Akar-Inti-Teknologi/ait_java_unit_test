@@ -25,12 +25,4 @@ public interface CustomerOrderLineItemMapper
     @Mapping(source = "customerOrderId", target = "customerOrder.id")
     CustomerOrderLineItem toEntity(CustomerOrderLineItemDTO customerOrderLineItemDTO);
 
-    default CustomerOrderLineItem fromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        CustomerOrderLineItem customerOrderLineItem = new CustomerOrderLineItem();
-        customerOrderLineItem.setId(id);
-        return customerOrderLineItem;
-    }
 }

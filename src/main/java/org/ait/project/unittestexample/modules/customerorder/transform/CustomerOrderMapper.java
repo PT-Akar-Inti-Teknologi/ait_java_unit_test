@@ -23,12 +23,4 @@ public interface CustomerOrderMapper extends EntityMapper<CustomerOrderDTO, Cust
     
     CustomerOrderFromMobileApp toResponse(CustomerOrder entity);
 
-    default CustomerOrder fromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        CustomerOrder customerOrder = new CustomerOrder();
-        customerOrder.setId(id);
-        return customerOrder;
-    }
 }
