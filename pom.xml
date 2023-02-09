@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>org.ait.project.unittestexample</groupId>
 	<artifactId>aitjavaunittestexample</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>ait java unit test example</name>
 	<description>ait java unit test example</description>
 	<properties>
