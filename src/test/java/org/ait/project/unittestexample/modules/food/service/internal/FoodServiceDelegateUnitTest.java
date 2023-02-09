@@ -64,7 +64,7 @@ public class FoodServiceDelegateUnitTest
 	public void beforeEachTest() {
 		super.beforeEachTest();
 		byte[] bytesToUse = new byte[1024];
-		getEasyRandom().nextBytes(bytesToUse);
+		getEasyRandom().nextObject(Byte.class);
 		MockMultipartFile multipartFile = new MockMultipartFile(getEasyRandom().nextObject(String.class), bytesToUse);
 		testMultipartFile = multipartFile;
 	}

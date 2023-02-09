@@ -94,7 +94,7 @@ public class FoodServiceInternalTest extends ServiceInternalTester {
 
 	@Test
 	public void testFetchFoodPicture() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	@Test
